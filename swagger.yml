@@ -1,0 +1,420 @@
+consumes:
+  - application/json
+info:
+  description: API implementation for golang use swagger.
+  title: Wakatime API
+  version: 1.0.0
+swagger: "2.0"
+produces:
+  - application/json
+schemes:
+  - https
+host: wakatime.com
+basePath: /api/v1
+paths:
+  /users/{user}/stats/{range}:
+    get:
+      tags:
+        - stats
+      operationId: getUserStats
+      description: A user's coding activity for the given time range. range can be one of last_7_days, last_30_days, last_6_months, or last_year.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+        - name: "range"
+          in: "path"
+          description: "Range activity"
+          required: true
+          type: string
+          default: last_7_days
+          enum:
+            - last_7_days
+            - last_30_days
+            - last_6_months
+            - last_year
+      responses:
+        200:
+          description: Statistical Coding Activity
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "#/definitions/stats"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/current/stats/{range}:
+    get:
+      tags:
+        - stats
+      operationId: currentUserStats
+      description: A user's coding activity for the given time range. range can be one of last_7_days, last_30_days, last_6_months, or last_year.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      parameters:
+        - name: "range"
+          in: "path"
+          description: "Range activity"
+          required: true
+          type: string
+          default: last_7_days
+          enum:
+            - last_7_days
+            - last_30_days
+            - last_6_months
+            - last_year
+      responses:
+        200:
+          description: Statistical Coding Activity
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "#/definitions/stats"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}/user_agents:
+    get:
+      tags:
+        - user_agents
+      operationId: getUserAgents
+      description: List of plugins which have sent data for this user.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: List of plugins.
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/user_agents"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/current/user_agents:
+    get:
+      tags:
+        - user_agents
+      operationId: currentUserAgents
+      description: List of plugins which have sent data for this user.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      responses:
+        200:
+          description: List of plugins.
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/user_agents"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}:
+    get:
+      tags:
+        - user
+      operationId: getUser
+      description: Get the user specified in path
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: A single User.
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "#/definitions/user"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/current:
+    get:
+      tags:
+        - user
+      operationId: currentUser
+      description: Get the current user.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      responses:
+        200:
+          description: Get the current User.
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "#/definitions/user"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+securityDefinitions:
+  WakatimeOauth2:
+    type: "oauth2"
+    authorizationUrl: "https://wakatime.com/oauth/authorize"
+    flow: "implicit"
+    scopes:
+      email: "access user’s email and identity information."
+      read_logged_time: "access user’s coding activity and other stats."
+      write_logged_time: "modify user’s coding activity."
+      read_stats: "access user’s languages, editors, and operating systems used."
+      read_orgs: "access user’s organizations, and coding activity for dashboard members."
+      read_private_leaderboards: "access user’s private leaderboards."
+      write_private_leaderboards: "modify user’s private leaderboards, including adding/removing members when current user had Admin or Owner role."
+  BasicAuth:
+    type: basic
+  APIQueryParam:
+    type: apiKey
+    in: query
+    name: "api_key"
+definitions:
+  error:
+    type: object
+    properties:
+      error:
+        type: string
+        minLength: 1
+  user:
+    type: object
+    properties:
+      id:
+        type: string
+        readOnly: true
+      has_premium_features:
+        type: boolean
+      display_name:
+        type: string
+      full_name:
+        type: string
+      email:
+        type: string
+      photo:
+        type: string
+      email_public:
+        type: boolean
+      is_email_confirmed:
+        type: boolean
+      photo_public:
+        type: boolean
+      timezone:
+        type: string
+      last_heartbeat:
+        type: string
+        format: "date-time"
+      last_plugin:
+        type: string
+      last_plugin_name:
+        type: string
+      last_project:
+        type: string
+      plan:
+        type: string
+      username:
+        type: string
+      website:
+        type: string
+      human_readable_website:
+        type: string
+      location:
+        type: string
+      logged_time_public:
+        type: boolean
+      languages_used_public:
+        type: boolean
+      is_hireable:
+        type: boolean
+      created_at:
+        type: string
+        format: date-time
+      modified_at:
+        type: string
+        format: date-time
+        x-nullable: true
+  user_agents:
+    type: object
+    properties:
+      id:
+        type: string
+        readOnly: true
+      value:
+        type: string
+        readOnly: true
+      editor:
+        type: string
+        readOnly: true
+      version:
+        type: string
+        readOnly: true
+      os:
+        type: string
+        readOnly: true
+      last_seen:
+        type: string
+        format: date-time
+      created_at:
+        type: string
+        format: date-time
+  stats_category:
+    type: object
+    properties:
+      name:
+        type: string
+      total_seconds:
+        type: integer
+        format: int64
+      percent:
+        type: number
+        format: double
+      digital:
+        type: string
+      text:
+        type: string
+      hours:
+        type: integer
+      minutes:
+        type: integer
+      seconds:
+        type: integer
+        format: int64
+  best_day:
+    type: object
+    properties:
+      date:
+        type: string
+        format: date(us)
+      total_seconds:
+        type: integer
+        format: int64
+    x-go-type:
+      import:
+        package: 'github.com/will7200/wakatime/internal'
+      type: BestDay
+  stats:
+    type: object
+    properties:
+      total_seconds:
+        type: integer
+        format: int64
+      human_readable_total:
+        type: string
+      daily_average:
+        type: integer
+      human_readable_daily_average:
+        type: string
+      projects:
+        type: array
+        items:
+          $ref: "#/definitions/stats_category"
+      languages:
+        type: array
+        items:
+          $ref: "#/definitions/stats_category"
+      editors:
+        type: array
+        items:
+          $ref: "#/definitions/stats_category"
+      operating_systems:
+        type: array
+        items:
+          $ref: "#/definitions/stats_category"
+      dependencies:
+        type: array
+        items:
+          $ref: "#/definitions/stats_category"
+      best_day:
+        $ref: "#/definitions/best_day"
+      range:
+        type: string
+      holidays:
+        type: integer
+      days_including_holidays:
+        type: integer
+      days_minus_holidays:
+        type: integer
+      status:
+        type: string
+      is_already_updating:
+        type: boolean
+      is_coding_activity_visible:
+        type: boolean
+      is_other_usage_visible:
+        type: boolean
+      is_stuck:
+        type: boolean
+      is_up_to_date:
+        type: boolean
+      start:
+        type: string
+        format: date-time
+      end:
+        type: string
+        format: date-time
+      timezone:
+        type: string
+      timeout:
+        type: integer
+      writes_only:
+        type: boolean
+      user_id:
+        type: string
+      username:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      modified_at:
+        type: string
+        format: date-time

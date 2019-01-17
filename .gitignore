@@ -1,0 +1,7 @@
+.cache*
+.idea/
+
+old/
+test/
+
+wakatime
