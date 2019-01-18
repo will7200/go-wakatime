@@ -143,7 +143,7 @@ func (a *Client) Projects(params *ProjectsParams, authInfo runtime.ClientAuthInf
 /*
 Stats A user's coding activity for the given time range. range can be one of last_7_days, last_30_days, last_6_months, or last_year.
 */
-func (a *Client) Stats(params *StatsParams, authInfo runtime.ClientAuthInfoWriter) (*StatsOK, error) {
+func (a *Client) Stats(params *StatsParams, authInfo runtime.ClientAuthInfoWriter) (*StatsOK, *StatsAccepted, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStatsParams()
@@ -163,9 +163,15 @@ func (a *Client) Stats(params *StatsParams, authInfo runtime.ClientAuthInfoWrite
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return result.(*StatsOK), nil
+	switch value := result.(type) {
+	case *StatsOK:
+		return value, nil, nil
+	case *StatsAccepted:
+		return nil, value, nil
+	}
+	return nil, nil, nil
 
 }
 

@@ -295,6 +295,13 @@ paths:
             properties:
               data:
                 $ref: "#/definitions/stats"
+        202:
+          description: Stats Accepted to Compute
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: "#/definitions/stats-pending"
         401:
           description: "The request requires authentication, or your authentication was invalid."
           schema:
@@ -1011,6 +1018,38 @@ definitions:
       start:
         type: string
         format: date-time
+  stats-pending:
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          id:
+            type: string
+          is_already_updating:
+            type: boolean
+          is_coding_activity_visible:
+            type: boolean
+          is_other_usage_visible:
+            type: boolean
+          is_stuck:
+            type: boolean
+          is_up_to_date:
+            type: boolean
+          range:
+            type: string
+          status:
+            type: string
+          timeout:
+            type: integer
+          user_id:
+            type: string
+          username:
+            type: string
+          writes_only:
+            type: boolean
+      message:
+        type: string
   stats:
     type: object
     properties:

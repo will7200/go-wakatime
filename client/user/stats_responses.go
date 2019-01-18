@@ -34,6 +34,13 @@ func (o *StatsReader) ReadResponse(response runtime.ClientResponse, consumer run
 		}
 		return result, nil
 
+	case 202:
+		result := NewStatsAccepted()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
+
 	case 401:
 		result := NewStatsUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +80,35 @@ func (o *StatsOK) Error() string {
 func (o *StatsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(StatsOKBody)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewStatsAccepted creates a StatsAccepted with default headers values
+func NewStatsAccepted() *StatsAccepted {
+	return &StatsAccepted{}
+}
+
+/*StatsAccepted handles this case with default header values.
+
+Stats Accepted to Compute
+*/
+type StatsAccepted struct {
+	Payload *StatsAcceptedBody
+}
+
+func (o *StatsAccepted) Error() string {
+	return fmt.Sprintf("[GET /users/{user}/stats/{range}][%d] statsAccepted  %+v", 202, o.Payload)
+}
+
+func (o *StatsAccepted) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(StatsAcceptedBody)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
@@ -129,6 +165,65 @@ func (o *StatsNotFound) Error() string {
 
 func (o *StatsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	return nil
+}
+
+/*StatsAcceptedBody stats accepted body
+swagger:model StatsAcceptedBody
+*/
+type StatsAcceptedBody struct {
+
+	// data
+	Data *models.StatsPending `json:"data,omitempty"`
+}
+
+// Validate validates this stats accepted body
+func (o *StatsAcceptedBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateData(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *StatsAcceptedBody) validateData(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.Data) { // not required
+		return nil
+	}
+
+	if o.Data != nil {
+		if err := o.Data.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("statsAccepted" + "." + "data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *StatsAcceptedBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *StatsAcceptedBody) UnmarshalBinary(b []byte) error {
+	var res StatsAcceptedBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
 	return nil
 }
 
