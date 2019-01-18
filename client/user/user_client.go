@@ -25,23 +25,23 @@ type Client struct {
 }
 
 /*
-CurrentUser Get the current user.
+Commits List of commits for a WakaTime project showing the time spent coding in each commit.
 */
-func (a *Client) CurrentUser(params *CurrentUserParams, authInfo runtime.ClientAuthInfoWriter) (*CurrentUserOK, error) {
+func (a *Client) Commits(params *CommitsParams, authInfo runtime.ClientAuthInfoWriter) (*CommitsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewCurrentUserParams()
+		params = NewCommitsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "currentUser",
+		ID:                 "Commits",
 		Method:             "GET",
-		PathPattern:        "/users/current",
+		PathPattern:        "/users/{user}/project/{project}/commits",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &CurrentUserReader{formats: a.formats},
+		Reader:             &CommitsReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -49,28 +49,173 @@ func (a *Client) CurrentUser(params *CurrentUserParams, authInfo runtime.ClientA
 	if err != nil {
 		return nil, err
 	}
-	return result.(*CurrentUserOK), nil
+	return result.(*CommitsOK), nil
 
 }
 
 /*
-GetUser Get the user specified in path
+Duration A user's coding activity for the given day as an array of durations.
 */
-func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, error) {
+func (a *Client) Duration(params *DurationParams, authInfo runtime.ClientAuthInfoWriter) (*DurationOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetUserParams()
+		params = NewDurationParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "getUser",
+		ID:                 "Duration",
+		Method:             "GET",
+		PathPattern:        "/users/{user}/duration",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DurationReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DurationOK), nil
+
+}
+
+/*
+Goals List of WakaTime goals for the user.
+*/
+func (a *Client) Goals(params *GoalsParams, authInfo runtime.ClientAuthInfoWriter) (*GoalsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGoalsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "Goals",
+		Method:             "GET",
+		PathPattern:        "/users/{user}/goals",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GoalsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*GoalsOK), nil
+
+}
+
+/*
+Projects List of WakaTime projects for the user.
+*/
+func (a *Client) Projects(params *ProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ProjectsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewProjectsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "Projects",
+		Method:             "GET",
+		PathPattern:        "/users/{user}/projects",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ProjectsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*ProjectsOK), nil
+
+}
+
+/*
+Stats A user's coding activity for the given time range. range can be one of last_7_days, last_30_days, last_6_months, or last_year.
+*/
+func (a *Client) Stats(params *StatsParams, authInfo runtime.ClientAuthInfoWriter) (*StatsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewStatsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "Stats",
+		Method:             "GET",
+		PathPattern:        "/users/{user}/stats/{range}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &StatsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*StatsOK), nil
+
+}
+
+/*
+Summaries A user's coding activity for the given time range as an array of summaries segmented by day.
+*/
+func (a *Client) Summaries(params *SummariesParams, authInfo runtime.ClientAuthInfoWriter) (*SummariesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewSummariesParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "Summaries",
+		Method:             "GET",
+		PathPattern:        "/users/{user}/summaries",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &SummariesReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*SummariesOK), nil
+
+}
+
+/*
+User Get the user specified in path
+*/
+func (a *Client) User(params *UserParams, authInfo runtime.ClientAuthInfoWriter) (*UserOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUserParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "User",
 		Method:             "GET",
 		PathPattern:        "/users/{user}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &GetUserReader{formats: a.formats},
+		Reader:             &UserReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -78,7 +223,36 @@ func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoW
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetUserOK), nil
+	return result.(*UserOK), nil
+
+}
+
+/*
+UserAgents List of plugins which have sent data for this user.
+*/
+func (a *Client) UserAgents(params *UserAgentsParams, authInfo runtime.ClientAuthInfoWriter) (*UserAgentsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUserAgentsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "User Agents",
+		Method:             "GET",
+		PathPattern:        "/users/{user}/user_agents",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UserAgentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UserAgentsOK), nil
 
 }
 

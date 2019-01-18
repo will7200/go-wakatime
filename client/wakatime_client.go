@@ -11,9 +11,8 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/will7200/wakatime/client/stats"
+	"github.com/will7200/wakatime/client/leaders"
 	"github.com/will7200/wakatime/client/user"
-	"github.com/will7200/wakatime/client/user_agents"
 )
 
 // Default wakatime HTTP client.
@@ -59,11 +58,9 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Wakatime {
 	cli := new(Wakatime)
 	cli.Transport = transport
 
-	cli.Stats = stats.New(transport, formats)
+	cli.Leaders = leaders.New(transport, formats)
 
 	cli.User = user.New(transport, formats)
-
-	cli.UserAgents = user_agents.New(transport, formats)
 
 	return cli
 }
@@ -109,11 +106,9 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // Wakatime is a client for wakatime
 type Wakatime struct {
-	Stats *stats.Client
+	Leaders *leaders.Client
 
 	User *user.Client
-
-	UserAgents *user_agents.Client
 
 	Transport runtime.ClientTransport
 }
@@ -122,10 +117,8 @@ type Wakatime struct {
 func (c *Wakatime) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
-	c.Stats.SetTransport(transport)
+	c.Leaders.SetTransport(transport)
 
 	c.User.SetTransport(transport)
-
-	c.UserAgents.SetTransport(transport)
 
 }
