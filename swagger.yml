@@ -12,11 +12,251 @@ schemes:
 host: wakatime.com
 basePath: /api/v1
 paths:
+  /leaders:
+    get:
+      tags:
+        - leaders
+      operationId: Leader
+      description: List of users ranked by coding activity in descending order. Same as the public leaderboards.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: []
+      parameters:
+        - name: "language"
+          in: "query"
+          description: "Filter leaders by a specific language."
+          required: false
+          type: "string"
+        - name: "page"
+          in: "query"
+          description: "Page number of leaderboard."
+          required: false
+          type: "integer"
+      responses:
+        200:
+          description: The request has succeeded.
+          schema:
+            $ref: "#/definitions/leaders"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}/project/{project}/commits:
+    get:
+      tags:
+        - user
+      operationId: Commits
+      description: List of commits for a WakaTime project showing the time spent coding in each commit.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: [read_logged_time]
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
+        - name: "project"
+          in: "path"
+          description: "Project Nam"
+          required: true
+          type: "string"
+        - name: "author"
+          in: "query"
+          description: "Filter commits to only those authored by the given username."
+          required: false
+          type: "string"
+        - name: "page"
+          in: "query"
+          description: "Page number of commit."
+          required: false
+          type: "integer"
+      responses:
+        200:
+          description: The request has succeeded.
+          schema:
+            $ref: "#/definitions/commits"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}/duration:
+    get:
+      tags:
+        - user
+      operationId: Duration
+      description: A user's coding activity for the given day as an array of durations.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: [read_logged_time]
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
+        - name: "project"
+          in: "query"
+          description: "Only show durations for this project."
+          required: false
+          type: "string"
+        - name: "branches"
+          in: "query"
+          description: "Only show durations for these branches; comma separated list of branch names."
+          required: false
+          type: "string"
+        - name: "date"
+          in: "query"
+          description: "Requested day; Durations will be returned from 12am until 11:59pm in user's timezone for this day."
+          required: true
+          type: string
+          format: date
+      responses:
+        200:
+          description: The request has succeeded.
+          schema:
+            $ref: "#/definitions/durations"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}/goals:
+    get:
+      tags:
+        - user
+      operationId: Goals
+      description: List of WakaTime goals for the user.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: [read_logged_time]
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
+      responses:
+        200:
+          description: The request has succeeded.
+          schema:
+            $ref: "#/definitions/goals"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}/projects:
+    get:
+      tags:
+        - user
+      operationId: Projects
+      description: List of WakaTime projects for the user.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: [read_logged_time]
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
+      responses:
+        200:
+          description: The request has succeeded.
+          schema:
+            $ref: "#/definitions/projects"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
+  /users/{user}/summaries:
+    get:
+      tags:
+        - user
+      operationId: Summaries
+      description: A user's coding activity for the given time range as an array of summaries segmented by day.
+      security:
+        - basicAuth: []
+        - apiKey: []
+        - oauth2: [read_logged_time]
+      parameters:
+        - name: "user"
+          in: "path"
+          description: "ID of the user to obtain"
+          required: true
+          type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
+        - name: "start"
+          in: "query"
+          description: "End date of the time range."
+          required: true
+          type: string
+          format: date
+        - name: "end"
+          in: "query"
+          description: "End date of the time range."
+          required: true
+          type: string
+          format: date
+        - name: "project"
+          in: "query"
+          description: "Only show durations for this project."
+          required: false
+          type: "string"
+        - name: "branches"
+          in: "query"
+          description: "Only show durations for these branches; comma separated list of branch names."
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: The request has succeeded.
+          schema:
+            $ref: "#/definitions/summaries"
+        401:
+          description: "The request requires authentication, or your authentication was invalid."
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: "The resource does not exist."
   /users/{user}/stats/{range}:
     get:
       tags:
-        - stats
-      operationId: getUserStats
+        - user
+      operationId: Stats
       description: A user's coding activity for the given time range. range can be one of last_7_days, last_30_days, last_6_months, or last_year.
       security:
         - basicAuth: []
@@ -28,6 +268,10 @@ paths:
           description: "ID of the user to obtain"
           required: true
           type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
         - name: "range"
           in: "path"
           description: "Range activity"
@@ -39,42 +283,10 @@ paths:
             - last_30_days
             - last_6_months
             - last_year
-      responses:
-        200:
-          description: Statistical Coding Activity
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: "#/definitions/stats"
-        401:
-          description: "The request requires authentication, or your authentication was invalid."
-          schema:
-            $ref: "#/definitions/error"
-        404:
-          description: "The resource does not exist."
-  /users/current/stats/{range}:
-    get:
-      tags:
-        - stats
-      operationId: currentUserStats
-      description: A user's coding activity for the given time range. range can be one of last_7_days, last_30_days, last_6_months, or last_year.
-      security:
-        - basicAuth: []
-        - apiKey: []
-        - oauth2: []
-      parameters:
-        - name: "range"
-          in: "path"
-          description: "Range activity"
-          required: true
-          type: string
-          default: last_7_days
-          enum:
-            - last_7_days
-            - last_30_days
-            - last_6_months
-            - last_year
+          x-go-type:
+            import:
+              package: 'github.com/will7200/wakatime/internal'
+            type: Date
       responses:
         200:
           description: Statistical Coding Activity
@@ -92,8 +304,8 @@ paths:
   /users/{user}/user_agents:
     get:
       tags:
-        - user_agents
-      operationId: getUserAgents
+        - user
+      operationId: User Agents
       description: List of plugins which have sent data for this user.
       security:
         - basicAuth: []
@@ -105,32 +317,10 @@ paths:
           description: "ID of the user to obtain"
           required: true
           type: "string"
-      responses:
-        200:
-          description: List of plugins.
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: "#/definitions/user_agents"
-        401:
-          description: "The request requires authentication, or your authentication was invalid."
-          schema:
-            $ref: "#/definitions/error"
-        404:
-          description: "The resource does not exist."
-  /users/current/user_agents:
-    get:
-      tags:
-        - user_agents
-      operationId: currentUserAgents
-      description: List of plugins which have sent data for this user.
-      security:
-        - basicAuth: []
-        - apiKey: []
-        - oauth2: []
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
       responses:
         200:
           description: List of plugins.
@@ -151,7 +341,7 @@ paths:
     get:
       tags:
         - user
-      operationId: getUser
+      operationId: User
       description: Get the user specified in path
       security:
         - basicAuth: []
@@ -163,33 +353,13 @@ paths:
           description: "ID of the user to obtain"
           required: true
           type: "string"
+          default: "current"
+          enum:
+            - "current"
+            - "<user id>"
       responses:
         200:
-          description: A single User.
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: "#/definitions/user"
-        401:
-          description: "The request requires authentication, or your authentication was invalid."
-          schema:
-            $ref: "#/definitions/error"
-        404:
-          description: "The resource does not exist."
-  /users/current:
-    get:
-      tags:
-        - user
-      operationId: currentUser
-      description: Get the current user.
-      security:
-        - basicAuth: []
-        - apiKey: []
-        - oauth2: []
-      responses:
-        200:
-          description: Get the current User.
+          description: The request has succeeded.
           schema:
             type: object
             properties:
@@ -221,6 +391,14 @@ securityDefinitions:
     in: query
     name: "api_key"
 definitions:
+  range:
+    type: string
+    default: last_7_days
+    enum:
+      - last_7_days
+      - last_30_days
+      - last_6_months
+      - last_year
   error:
     type: object
     properties:
@@ -342,6 +520,497 @@ definitions:
       import:
         package: 'github.com/will7200/wakatime/internal'
       type: BestDay
+  commits:
+    type: object
+    properties:
+      author:
+        type: string
+        x-nullable: true
+      commits:
+        type: array
+        items:
+          type: object
+          properties:
+            author_avatar_url:
+              type: string
+            author_date:
+              type: string
+            author_email:
+              type: string
+            author_html_url:
+              type: string
+            author_name:
+              type: string
+            author_url:
+              type: string
+            author_username:
+              type: string
+            committer_avatar_url:
+              type: string
+            committer_date:
+              type: string
+            committer_email:
+              type: string
+            committer_html_url:
+              type: string
+            committer_name:
+              type: string
+            committer_url:
+              type: string
+            committer_username:
+              type: string
+            created_at:
+              type: string
+            hash:
+              type: string
+            html_url:
+              type: string
+            human_readable_total:
+              type: string
+            human_readable_total_with_seconds:
+              type: string
+            id:
+              type: string
+            message:
+              type: string
+            ref:
+              type: string
+            total_seconds:
+              type: integer
+            truncated_hash:
+              type: string
+            url:
+              type: string
+      next_page:
+        type: integer
+        x-nullable: true
+      next_page_url:
+        type: string
+        x-nullable: true
+      page:
+        type: integer
+      prev_page:
+        type: integer
+        x-nullable: true
+      prev_page_url:
+        type: string
+        x-nullable: true
+      project:
+        type: object
+        properties:
+          created_at:
+            type: string
+            format: date-time
+          html_escaped_name:
+            type: string
+          id:
+            type: string
+          name:
+            type: string
+          privacy:
+            type: string
+          repository:
+            type: object
+            properties:
+              created_at:
+                type: string
+                format: date-time
+              default_branch:
+                type: string
+              description:
+                type: string
+              fork_count:
+                type: integer
+              full_name:
+                type: string
+              homepage:
+                type: string
+                x-nullable: true
+              html_url:
+                type: string
+              id:
+                type: string
+              is_fork:
+                type: boolean
+              is_private:
+                type: boolean
+              last_synced_at:
+                type: string
+              modified_at:
+                type: string
+              name:
+                type: string
+              provider:
+                type: string
+              star_count:
+                type: integer
+              url:
+                type: string
+              watch_count:
+                type: integer
+          url:
+            type: string
+      status:
+        type: string
+      total_pages:
+        type: integer
+  durations:
+    type: object
+    properties:
+      branches:
+        type: array
+        items:
+          type: string
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            created_at:
+              type: string
+            cursorpos:
+              type: string
+              x-nullable: true
+            duration:
+              type: integer
+            id:
+              type: string
+            lineno:
+              type: integer
+              x-nullable: true
+            machine_name_id:
+              type: string
+            project:
+              type: string
+            time:
+              type: number
+            user_id:
+              type: string
+      end:
+        type: string
+        format: date-time
+      start:
+        type: string
+        format: date-time
+      timezone:
+        type: string
+  goals:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            average_status:
+              type: string
+            chart_data:
+              type: array
+              items:
+                type: object
+                properties:
+                  actual_seconds:
+                    type: integer
+                  actual_seconds_text:
+                    type: string
+                  goal_seconds:
+                    type: integer
+                  goal_seconds_text:
+                    type: string
+                  range:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      end:
+                        type: string
+                        format: date-time
+                      start:
+                        type: string
+                        format: date-time
+                      text:
+                        type: string
+                      timezone:
+                        type: string
+                  range_status:
+                    type: string
+                  range_status_reason:
+                    type: string
+            created_at:
+              type: string
+              format: date-time
+            cumulative_status:
+              type: string
+            delta:
+              type: string
+            editors:
+              type: array
+              items: {}
+            id:
+              type: string
+            ignore_days:
+              type: array
+              items: {}
+            improve_by_percent:
+              type: number
+              format: double
+            is_current_user_owner:
+              type: boolean
+            is_enabled:
+              type: boolean
+            is_inverse:
+              type: boolean
+            is_snoozed:
+              type: boolean
+            languages:
+              type: array
+              items: {}
+            modified_at:
+              type: string
+              format: date-time
+            owner:
+              type: object
+              properties:
+                display_name:
+                  type: string
+                email:
+                  type: string
+                full_name:
+                  type: string
+                id:
+                  type: string
+                photo:
+                  type: string
+                username:
+                  type: string
+            projects:
+              type: array
+              items: {}
+            range_text:
+              type: string
+            seconds:
+              type: integer
+            shared_with:
+              type: array
+              items: {}
+            snooze_until:
+              type: string
+            status:
+              type: string
+            subscribers:
+              type: array
+              items: {}
+            title:
+              type: string
+            type:
+              type: string
+      total:
+        type: integer
+      total_pages:
+        type: integer
+  leaders-rank:
+    type: object
+    properties:
+      rank:
+        type: integer
+      running_total:
+        type: object
+        properties:
+          daily_average:
+            type: integer
+          human_readable_daily_average:
+            type: string
+          human_readable_total:
+            type: string
+          languages:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                total_seconds:
+                  type: integer
+          modified_at:
+            type: string
+          total_seconds:
+            type: integer
+      user:
+        type: object
+        properties:
+          display_name:
+            type: string
+          email:
+            type: string
+            x-nullable: true
+          email_public:
+            type: boolean
+          full_name:
+            type: string
+          human_readable_website:
+            type: string
+            x-nullable: true
+          id:
+            type: string
+          location:
+            type: string
+          photo:
+            type: string
+          photo_public:
+            type: boolean
+          username:
+            type: string
+            x-nullable: true
+          website:
+            type: string
+            x-nullable: true
+  leaders:
+    type: object
+    properties:
+      current_user:
+        $ref: "#/definitions/leaders-rank"
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/leaders-rank"
+      language:
+        type: string
+        x-nullable: true
+      modified_at:
+        type: string
+        format: date-time
+      page:
+        type: integer
+      range:
+        type: string
+      total_pages:
+        type: integer
+  projects:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            created_at:
+              type: string
+            html_escaped_name:
+              type: string
+            id:
+              type: string
+            name:
+              type: string
+            privacy:
+              type: string
+            repository:
+              type: object
+              x-nullable: true
+              properties:
+                created_at:
+                  type: string
+                default_branch:
+                  type: string
+                description:
+                  type: string
+                fork_count:
+                  type: integer
+                full_name:
+                  type: string
+                homepage:
+                  type: string
+                  x-nullable: true
+                html_url:
+                  type: string
+                id:
+                  type: string
+                is_fork:
+                  type: boolean
+                is_private:
+                  type: boolean
+                last_synced_at:
+                  type: string
+                modified_at:
+                  type: string
+                name:
+                  type: string
+                provider:
+                  type: string
+                star_count:
+                  type: integer
+                url:
+                  type: string
+                watch_count:
+                  type: integer
+            url:
+              type: string
+  summaries:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          properties:
+            categories:
+              type: array
+              items:
+                $ref: "#/definitions/stats_category"
+            dependencies:
+              type: array
+              items:
+                $ref: "#/definitions/stats_category"
+            editors:
+              type: array
+              items:
+                $ref: "#/definitions/stats_category"
+            grand_total:
+              type: object
+              properties:
+                digital:
+                  type: string
+                hours:
+                  type: integer
+                minutes:
+                  type: integer
+                text:
+                  type: string
+                total_seconds:
+                  type: integer
+            languages:
+              type: array
+              items:
+                $ref: "#/definitions/stats_category"
+            operating_systems:
+              type: array
+              items:
+                $ref: "#/definitions/stats_category"
+            projects:
+              type: array
+              items:
+                $ref: "#/definitions/stats_category"
+            range:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date(us)
+                end:
+                  type: string
+                  format: date-time
+                start:
+                  type: string
+                  format: date-time
+                text:
+                  type: string
+                timezone:
+                  type: string
+      end:
+        type: string
+        format: date-time
+      start:
+        type: string
+        format: date-time
   stats:
     type: object
     properties:
