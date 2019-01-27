@@ -424,8 +424,10 @@ definitions:
         type: string
       full_name:
         type: string
+        x-nullable: true
       email:
         type: string
+        x-nullable: true
       photo:
         type: string
       email_public:
@@ -439,22 +441,30 @@ definitions:
       last_heartbeat:
         type: string
         format: "date-time"
+        x-nullable: true
       last_plugin:
         type: string
+        x-nullable: true
       last_plugin_name:
         type: string
+        x-nullable: true
       last_project:
         type: string
+        x-nullable: true
       plan:
         type: string
       username:
         type: string
+        x-nullable: true
       website:
         type: string
+        x-nullable: true
       human_readable_website:
         type: string
+        x-nullable: true
       location:
         type: string
+        x-nullable: true
       logged_time_public:
         type: boolean
       languages_used_public:
