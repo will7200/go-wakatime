@@ -5,3 +5,5 @@ old/
 test/
 
 wakatime
+*.py
+parse.yml
