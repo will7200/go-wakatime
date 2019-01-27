@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 
-	internal "github.com/will7200/wakatime/internal"
+	internal "github.com/will7200/go-wakatime/internal"
 )
 
 // Stats stats

@@ -285,7 +285,7 @@ paths:
             - last_year
           x-go-type:
             import:
-              package: 'github.com/will7200/wakatime/internal'
+              package: 'github.com/will7200/go-wakatime/internal'
             type: Date
       responses:
         200:
@@ -535,7 +535,7 @@ definitions:
         format: int64
     x-go-type:
       import:
-        package: 'github.com/will7200/wakatime/internal'
+        package: 'github.com/will7200/go-wakatime/internal'
       type: BestDay
   commits:
     type: object
