@@ -25,19 +25,19 @@ type User struct {
 	DisplayName string `json:"display_name,omitempty"`
 
 	// email
-	Email string `json:"email,omitempty"`
+	Email *string `json:"email,omitempty"`
 
 	// email public
 	EmailPublic bool `json:"email_public,omitempty"`
 
 	// full name
-	FullName string `json:"full_name,omitempty"`
+	FullName *string `json:"full_name,omitempty"`
 
 	// has premium features
 	HasPremiumFeatures bool `json:"has_premium_features,omitempty"`
 
 	// human readable website
-	HumanReadableWebsite string `json:"human_readable_website,omitempty"`
+	HumanReadableWebsite *string `json:"human_readable_website,omitempty"`
 
 	// id
 	// Read Only: true
@@ -54,19 +54,19 @@ type User struct {
 
 	// last heartbeat
 	// Format: date-time
-	LastHeartbeat strfmt.DateTime `json:"last_heartbeat,omitempty"`
+	LastHeartbeat *strfmt.DateTime `json:"last_heartbeat,omitempty"`
 
 	// last plugin
-	LastPlugin string `json:"last_plugin,omitempty"`
+	LastPlugin *string `json:"last_plugin,omitempty"`
 
 	// last plugin name
-	LastPluginName string `json:"last_plugin_name,omitempty"`
+	LastPluginName *string `json:"last_plugin_name,omitempty"`
 
 	// last project
-	LastProject string `json:"last_project,omitempty"`
+	LastProject *string `json:"last_project,omitempty"`
 
 	// location
-	Location string `json:"location,omitempty"`
+	Location *string `json:"location,omitempty"`
 
 	// logged time public
 	LoggedTimePublic bool `json:"logged_time_public,omitempty"`
@@ -88,10 +88,10 @@ type User struct {
 	Timezone string `json:"timezone,omitempty"`
 
 	// username
-	Username string `json:"username,omitempty"`
+	Username *string `json:"username,omitempty"`
 
 	// website
-	Website string `json:"website,omitempty"`
+	Website *string `json:"website,omitempty"`
 }
 
 // Validate validates this user
