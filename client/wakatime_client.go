@@ -11,8 +11,8 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/will7200/wakatime/client/leaders"
-	"github.com/will7200/wakatime/client/user"
+	"github.com/will7200/go-wakatime/client/leaders"
+	"github.com/will7200/go-wakatime/client/user"
 )
 
 // Default wakatime HTTP client.

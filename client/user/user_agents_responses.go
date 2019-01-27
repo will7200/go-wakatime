@@ -16,7 +16,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	models "github.com/will7200/wakatime/models"
+	models "github.com/will7200/go-wakatime/models"
 )
 
 // UserAgentsReader is a Reader for the UserAgents structure.
