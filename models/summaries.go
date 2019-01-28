@@ -9,7 +9,6 @@ import (
 	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/will7200/go-wakatime/internal"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
@@ -446,7 +445,8 @@ func (m *SummariesDataItems0GrandTotal) UnmarshalBinary(b []byte) error {
 type SummariesDataItems0Range struct {
 
 	// date
-	Date internal.Date `json:"date,omitempty"`
+	// Format: date
+	Date strfmt.Date `json:"date,omitempty"`
 
 	// end
 	// Format: date-time
@@ -491,10 +491,7 @@ func (m *SummariesDataItems0Range) validateDate(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := m.Date.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("range" + "." + "date")
-		}
+	if err := validate.FormatOf("range"+"."+"date", "body", "date", m.Date.String(), formats); err != nil {
 		return err
 	}
 
