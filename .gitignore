@@ -7,3 +7,7 @@ test/
 wakatime
 *.py
 parse.yml
+
+.DS_Store
+
+internal/template
