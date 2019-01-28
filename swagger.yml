@@ -962,6 +962,13 @@ definitions:
                   type: integer
             url:
               type: string
+  range-date:
+    type: string
+    format: date(us)
+    x-go-type:
+      import:
+        package: 'github.com/will7200/go-wakatime/internal'
+      type: Date
   summaries:
     type: object
     properties:
@@ -1010,8 +1017,7 @@ definitions:
               type: object
               properties:
                 date:
-                  type: string
-                  format: date(us)
+                  $ref: "#/definitions/range-date"
                 end:
                   type: string
                   format: date-time
