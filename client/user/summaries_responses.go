@@ -119,13 +119,21 @@ func NewSummariesNotFound() *SummariesNotFound {
 The resource does not exist.
 */
 type SummariesNotFound struct {
+	Payload *models.Error
 }
 
 func (o *SummariesNotFound) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/summaries][%d] summariesNotFound ", 404)
+	return fmt.Sprintf("[GET /users/{user}/summaries][%d] summariesNotFound  %+v", 404, o.Payload)
 }
 
 func (o *SummariesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -119,13 +119,21 @@ func NewDurationNotFound() *DurationNotFound {
 The resource does not exist.
 */
 type DurationNotFound struct {
+	Payload *models.Error
 }
 
 func (o *DurationNotFound) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/duration][%d] durationNotFound ", 404)
+	return fmt.Sprintf("[GET /users/{user}/duration][%d] durationNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DurationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

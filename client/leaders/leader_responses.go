@@ -119,13 +119,21 @@ func NewLeaderNotFound() *LeaderNotFound {
 The resource does not exist.
 */
 type LeaderNotFound struct {
+	Payload *models.Error
 }
 
 func (o *LeaderNotFound) Error() string {
-	return fmt.Sprintf("[GET /leaders][%d] leaderNotFound ", 404)
+	return fmt.Sprintf("[GET /leaders][%d] leaderNotFound  %+v", 404, o.Payload)
 }
 
 func (o *LeaderNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

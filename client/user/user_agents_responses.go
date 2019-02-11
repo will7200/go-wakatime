@@ -122,13 +122,21 @@ func NewUserAgentsNotFound() *UserAgentsNotFound {
 The resource does not exist.
 */
 type UserAgentsNotFound struct {
+	Payload *models.Error
 }
 
 func (o *UserAgentsNotFound) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/user_agents][%d] userAgentsNotFound ", 404)
+	return fmt.Sprintf("[GET /users/{user}/user_agents][%d] userAgentsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UserAgentsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

@@ -157,13 +157,21 @@ func NewStatsNotFound() *StatsNotFound {
 The resource does not exist.
 */
 type StatsNotFound struct {
+	Payload *models.Error
 }
 
 func (o *StatsNotFound) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/stats/{range}][%d] statsNotFound ", 404)
+	return fmt.Sprintf("[GET /users/{user}/stats/{range}][%d] statsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *StatsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

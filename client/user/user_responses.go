@@ -121,13 +121,21 @@ func NewUserNotFound() *UserNotFound {
 The resource does not exist.
 */
 type UserNotFound struct {
+	Payload *models.Error
 }
 
 func (o *UserNotFound) Error() string {
-	return fmt.Sprintf("[GET /users/{user}][%d] userNotFound ", 404)
+	return fmt.Sprintf("[GET /users/{user}][%d] userNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UserNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }
