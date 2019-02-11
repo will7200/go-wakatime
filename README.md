@@ -3,7 +3,9 @@
 [![GolangCI](https://golangci.com/badges/github.com/will7200/go-wakatime.svg)](https://golangci.com)
 [![Go Report Card](https://goreportcard.com/badge/github.com/will7200/go-wakatime)](https://goreportcard.com/report/github.com/will7200/go-wakatime)
 
-This package contains a golang implementation of Wakatime's API V1. I didn't like the other implementations of go-wakatime so I made this one.
+This package contains a golang implementation of Wakatime's API V1. I didn't like the other implementations of go-wakatime so I made this one. 
+
+Explore the swagger file with [Redoc](https://rebilly.github.io/ReDoc/?url=https://raw.githubusercontent.com/will7200/go-wakatime/master/swagger.yml)
 
 Generated from swagger spec for the most part except for some exceptions
 1. The swagger spec has not default date parse for the likes of 01/31/2019, so the internal package houses a near replica
