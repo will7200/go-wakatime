@@ -900,6 +900,23 @@ definitions:
           website:
             type: string
             x-nullable: true
+  rangeLeaders:
+    type: object
+    properties:
+      start_date:
+        type: string
+        format: date
+      start_text:
+        type: string
+      end_date:
+        type: string
+        format: date
+      end_text:
+        type: string
+      name:
+        type: string
+      text:
+        type: string
   leaders:
     type: object
     properties:
@@ -918,7 +935,7 @@ definitions:
       page:
         type: integer
       range:
-        type: string
+        $ref: "#/definitions/leaders-rank"
       total_pages:
         type: integer
   projects:

@@ -36,7 +36,7 @@ type Leaders struct {
 	Page int64 `json:"page,omitempty"`
 
 	// range
-	Range string `json:"range,omitempty"`
+	Range *LeadersRank `json:"range,omitempty"`
 
 	// total pages
 	TotalPages int64 `json:"total_pages,omitempty"`
@@ -55,6 +55,10 @@ func (m *Leaders) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateModifiedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRange(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -115,6 +119,24 @@ func (m *Leaders) validateModifiedAt(formats strfmt.Registry) error {
 
 	if err := validate.FormatOf("modified_at", "body", "date-time", m.ModifiedAt.String(), formats); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *Leaders) validateRange(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Range) { // not required
+		return nil
+	}
+
+	if m.Range != nil {
+		if err := m.Range.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("range")
+			}
+			return err
+		}
 	}
 
 	return nil
