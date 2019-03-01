@@ -871,7 +871,8 @@ definitions:
           modified_at:
             type: string
           total_seconds:
-            type: integer
+            type: number
+            format: double
       user:
         type: object
         properties:

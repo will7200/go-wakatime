@@ -120,7 +120,7 @@ type LeadersRankRunningTotal struct {
 	ModifiedAt string `json:"modified_at,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 }
 
 // Validate validates this leaders rank running total
