@@ -188,7 +188,7 @@ type LeadersRankRunningTotalLanguagesItems0 struct {
 	Name string `json:"name,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 }
 
 // Validate validates this leaders rank running total languages items0

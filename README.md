@@ -61,4 +61,11 @@ func main() {
 
 ```
 
+### Build
+
+Make changes to swagger.yml
+```bash
+swagger generate client
+```
+
 

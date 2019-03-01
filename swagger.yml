@@ -866,7 +866,8 @@ definitions:
                 name:
                   type: string
                 total_seconds:
-                  type: integer
+                  type: number
+                  format: double
           modified_at:
             type: string
           total_seconds:
