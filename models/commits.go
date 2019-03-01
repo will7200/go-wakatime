@@ -200,7 +200,7 @@ type CommitsItems0 struct {
 	Ref string `json:"ref,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 
 	// truncated hash
 	TruncatedHash string `json:"truncated_hash,omitempty"`

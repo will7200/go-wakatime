@@ -37,7 +37,7 @@ type StatsCategory struct {
 	Text string `json:"text,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 }
 
 // Validate validates this stats category

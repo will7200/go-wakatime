@@ -101,7 +101,7 @@ type Stats struct {
 	Timezone string `json:"timezone,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 
 	// user id
 	UserID string `json:"user_id,omitempty"`

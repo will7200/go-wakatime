@@ -414,7 +414,7 @@ type SummariesDataItems0GrandTotal struct {
 	Text string `json:"text,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 }
 
 // Validate validates this summaries data items0 grand total
