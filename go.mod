@@ -14,6 +14,6 @@ require (
 	github.com/go-openapi/validate v0.18.0
 	github.com/kr/pretty v0.1.0
 	github.com/mailru/easyjson v0.0.0-20180823135443-60711f1a8329
-	github.com/stretchr/testify v1.3.0 // indirect
+	github.com/stretchr/testify v1.3.0
 	golang.org/x/net v0.0.0-20190125091013-d26f9f9a57f3 // indirect
 )

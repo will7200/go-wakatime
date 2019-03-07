@@ -1,0 +1,15 @@
+sudo: false
+language: go
+env:
+  secure: v2vHh2gI49UT5bLjxt9h1EoRg3gwfhnXKbWSagnje8lPOQh5nY7GiUo9S+UWJP02gYLQXhfEGwAmmIzdIMMMdjZ15CIXKrJdv4RbliKLmOWWzfW2PA1kAArhijB3NSNu9VtmoYq4Lox7ERrrn+fWy73tAfNQo7yvhxacUde0HR2JUYv6O3CavB7Es8np/+8ntCp7tH4DHwP2eUOzpB8sLjG4hE+LnZ+2wjHUR0FnvLwF4Cf3TdlI6OIq9vw5AJ3wrznOExnDxUHbO79I74+vNcPzAenaaISW25I2M9iwtmVF7nLVUUzIBYQE2KEALB4ieQ8L7Im5RKtn6tslh1o0bdSzIPAgOMei+VziTnkrCEcSHZsnDklWfDtLhOYxuOdX2LHoqkMSqalC6uMFQTvyOKHTHSz+meYcn92KuBZGH0oK2P122wv0RsjtqE3ZC3gD25jIC9TbAduF5tboaqmxOPHvESJCEnkY+sbyR1f/MQKlozflQML7KrQ05QWuhkegzXUHdtKkiFtomR3Qf/4B50pmMETFu/+7Kpmqy/LGRTv9/lJtbyAP5Cc2PLq9tT8MjQqC0yslxha11BrY7R8dFKH9DJVYh1GfVLwttTdKRYXeHEKmbm2aE3CPq1fsbzsTmXaaa5OtZZN59267ki0g1H4B1zCl/ov69AJvwfd5YZY=
+go:
+- 1.11.x
+- release
+git:
+  depth: 1
+notifications:
+  email: false
+before_script:
+- echo "Yes"
+script:
+- go test -v -race ./...
