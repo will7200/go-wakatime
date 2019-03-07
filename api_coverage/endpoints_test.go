@@ -1,4 +1,4 @@
-package api_converage
+package api_coverage
 
 import (
 	"context"

@@ -2,6 +2,9 @@
 [![GoDoc](https://godoc.org/github.com/will7200/go-wakatime?status.svg)](http://godoc.org/github.com/will7200/go-wakatime)
 [![GolangCI](https://golangci.com/badges/github.com/will7200/go-wakatime.svg)](https://golangci.com)
 [![Go Report Card](https://goreportcard.com/badge/github.com/will7200/go-wakatime)](https://goreportcard.com/report/github.com/will7200/go-wakatime)
+[![Build Status](https://travis-ci.org/will7200/go-wakatime.svg?branch=master)](https://travis-ci.org/will7200/go-wakatime)
+[![Coverage Status](https://coveralls.io/repos/github/will7200/go-wakatime/badge.svg?branch=master)](https://coveralls.io/github/will7200/go-wakatime?branch=master)
+[![API Coverage](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fapi.jsonbin.io%2Fb%2F5c81e66a2e4731596f19ea57%2F1)](https://api.jsonbin.io/b/5c81e66a2e4731596f19ea57/latest)  
 
 This package contains a golang implementation of Wakatime's API V1. I didn't like the other implementations of go-wakatime so I made this one. 
 
