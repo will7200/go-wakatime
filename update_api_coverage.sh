@@ -12,7 +12,7 @@ elif [ $TOTAL_P -lt 75 ]; then
 else
    COLOR="blue"
 fi
-NEW_JSON=$(echo $json | jq ".message = \"$TOTAL_P\"" | jq ".color = \"$COLOR\"")
+NEW_JSON=$(echo $json | jq ".message = \"$TOTAL_P%\"" | jq ".color = \"$COLOR\"")
 curl --header "Content-Type: application/json" \
        --request PUT \
        --data "$NEW_JSON" \
