@@ -65,7 +65,7 @@ func (a *Client) Duration(params *DurationParams, authInfo runtime.ClientAuthInf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "Duration",
 		Method:             "GET",
-		PathPattern:        "/users/{user}/duration",
+		PathPattern:        "/users/{user}/durations",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},

@@ -65,7 +65,7 @@ type DurationOK struct {
 }
 
 func (o *DurationOK) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/duration][%d] durationOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /users/{user}/durations][%d] durationOK  %+v", 200, o.Payload)
 }
 
 func (o *DurationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -94,7 +94,7 @@ type DurationUnauthorized struct {
 }
 
 func (o *DurationUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/duration][%d] durationUnauthorized  %+v", 401, o.Payload)
+	return fmt.Sprintf("[GET /users/{user}/durations][%d] durationUnauthorized  %+v", 401, o.Payload)
 }
 
 func (o *DurationUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -123,7 +123,7 @@ type DurationNotFound struct {
 }
 
 func (o *DurationNotFound) Error() string {
-	return fmt.Sprintf("[GET /users/{user}/duration][%d] durationNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /users/{user}/durations][%d] durationNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DurationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
