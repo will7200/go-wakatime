@@ -19,7 +19,7 @@ type BestDay struct {
 	Date Date `json:"date,omitempty"`
 
 	// total seconds
-	TotalSeconds int64 `json:"total_seconds,omitempty"`
+	TotalSeconds float64 `json:"total_seconds,omitempty"`
 }
 
 // Validate validates this best day

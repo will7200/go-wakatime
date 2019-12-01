@@ -27,7 +27,7 @@ func IsDate(str string) bool {
 const (
 	// DateUSRepresentation represents a full-date as specified by RFC3339
 	// See: http://goo.gl/xXOvVd
-	DateUSRepresentation = "01/02/2006"
+	DateUSRepresentation = "2006-01-02"
 	jsonNull             = "null"
 )
 
